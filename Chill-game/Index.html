@@ -1,69 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cookie Road Clicker</title>
-<link rel="stylesheet" href="Chill.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Road Clicker</title>
+
+    <link rel="stylesheet" href="Chill.css">
 </head>
 <body>
 
 <div class="game">
 
-    <div class="sky">
+    <div id="sky" class="sky">
+
+        <div id="sunMoon" class="sun"></div>
+
+        <div id="cloudLayer"></div>
+
+        <div id="birdLayer"></div>
+
+        <div id="planeLayer"></div>
 
         <div class="score">
-            Cookies: <span id="cookieCount">0</span>
+            Cookies:
+            <span id="cookieCount">0</span>
         </div>
 
-        <div class="cookie-box" id="cookieBox">
-            <button id="cookieBtn" class="cookie">🍪</button>
+        <div class="cookie-box">
+
+            <div id="cookieArea">
+
+                <button id="cookieBtn" class="cookie">
+                    🍪
+                </button>
+
+            </div>
+
         </div>
 
         <div class="house">
+
             <div class="roof"></div>
-            <div class="home"></div>
+
+            <div class="home">
+
+                <div class="window left"></div>
+
+                <div class="window right"></div>
+
+                <div class="door"></div>
+
+            </div>
+
         </div>
 
         <div class="lamp">
+
             <div class="pole"></div>
+
             <div class="arm"></div>
+
             <div class="head"></div>
-            <div class="glow"></div>
+
+            <div id="lampGlow" class="glow"></div>
+
         </div>
 
         <div class="shop">
-            <div class="up">1+ Per Click</div>
-            <div class="up">5+ Per Click</div>
-            <div class="up">10+ Per Click</div>
-            <div class="up">25+ Per Click</div>
+
+            <button class="upgrade" data-cost="50" data-power="1">
+                +1 Per Click
+                <span>50</span>
+            </button>
+
+            <button class="upgrade" data-cost="250" data-power="5">
+                +5 Per Click
+                <span>250</span>
+            </button>
+
+            <button class="upgrade" data-cost="1000" data-power="10">
+                +10 Per Click
+                <span>1000</span>
+            </button>
+
+            <button class="upgrade" data-cost="5000" data-power="25">
+                +25 Per Click
+                <span>5000</span>
+            </button>
+
         </div>
 
     </div>
 
     <div class="road">
 
-        <div class="line-wrap">
+        <div class="road-lines">
+
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
+
         </div>
 
-        <div id="carLane"></div>
+        <div id="vehicleLayer"></div>
+
+        <div id="truckLayer"></div>
 
     </div>
 
     <div class="grass">
 
-        <div class="bonus">
+        <div class="bonus-panel">
 
-            <div id="bonusText" class="btxt">
-                No Bonus
+            <div id="bonusText" class="bonus-text">
+                Geen Bonus
             </div>
 
-            <div class="icon">
-                🚗
+            <div class="bonus-icon">
+                ⭐
             </div>
 
         </div>
@@ -73,5 +128,6 @@
 </div>
 
 <script src="Chill.js"></script>
+
 </body>
 </html>
