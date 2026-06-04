@@ -1,183 +1,275 @@
 *{
     margin:0;
     padding:0;
-    box-sizing:border-box;
+    box-sizing:border-box
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
+    overflow:hidden;
+    font-family:Arial,sans-serif
 }
 
-.scene{
-    width:100vw;
+.game{
     height:100vh;
     display:flex;
-    flex-direction:column;
+    flex-direction:column
 }
 
-/* SKY */
 .sky{
-    position:relative;
     flex:1;
-    background:#42c3c5;
+    position:relative;
+    background:#41c6c9
 }
 
-/* LEFT BOX */
-.left-box{
+.road{
+    height:33vh;
+    min-height:180px;
+    background:#777;
+    position:relative;
+    overflow:hidden
+}
+
+.grass{
+    height:18vh;
+    min-height:120px;
+    background:#3f7138;
+    position:relative
+}
+
+.score{
     position:absolute;
-    top:60px;
-    left:60px;
-    width:320px;
-    height:320px;
-    border:8px solid #ddd;
-    background:rgba(255,255,255,0.15);
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#fff;
+    font-size:clamp(20px,2vw,34px);
+    font-weight:bold
 }
 
-/* HOUSE */
+.cookie-box{
+    position:absolute;
+    left:4%;
+    top:8%;
+    width:32%;
+    aspect-ratio:1;
+    border:8px solid #ddd;
+    background:rgba(255,255,255,.15);
+    display:flex;
+    justify-content:center;
+    align-items:center
+}
+
+.cookie{
+    font-size:clamp(80px,10vw,170px);
+    border:none;
+    background:none;
+    cursor:pointer;
+    user-select:none
+}
+
 .house{
     position:absolute;
     bottom:0;
     left:42%;
-    transform:translateX(-50%);
+    transform:translateX(-50%)
 }
 
-.house-body{
-    width:160px;
-    height:120px;
-    background:brown;
-}
-
-.house-roof{
+.roof{
     width:0;
     height:0;
-    border-left:100px solid transparent;
-    border-right:100px solid transparent;
-    border-bottom:120px solid #8b5a20;
-    margin-left:-20px;
+    border-left:90px solid transparent;
+    border-right:90px solid transparent;
+    border-bottom:120px solid #8a551f
 }
 
-/* STREET LAMP */
+.home{
+    width:160px;
+    height:130px;
+    background:#a62d2d
+}
+
 .lamp{
     position:absolute;
     right:28%;
-    bottom:0;
-    width:12px;
-    height:300px;
-    background:#d8deb0;
+    bottom:0
 }
 
-.lamp::before{
-    content:"";
+.pole{
+    width:18px;
+    height:330px;
+    background:#ddd
+}
+
+.arm{
     position:absolute;
-    top:-15px;
+    top:0;
     left:-55px;
     width:70px;
     height:12px;
     background:#ddd;
     transform:rotate(18deg);
-    transform-origin:right center;
+    transform-origin:right center
 }
 
-.lamp-light{
+.head{
     position:absolute;
-    top:-5px;
-    left:-60px;
-    width:35px;
-    height:8px;
+    left:-70px;
+    top:-12px;
+    width:32px;
+    height:18px;
     background:yellow;
-    transform:rotate(18deg);
+    border-radius:4px
 }
 
-.light-cone{
+.glow{
     position:absolute;
-    top:50px;
-    left:-140px;
-    width:220px;
-    height:450px;
-    background:rgba(255,255,150,0.25);
-    clip-path:polygon(50% 0%, 100% 100%, 0% 100%);
+    top:0;
+    left:-170px;
+    width:260px;
+    height:420px;
+    background:rgba(255,255,150,.25);
+    clip-path:polygon(50% 0%,100% 100%,0% 100%)
 }
 
-/* SCORE BOARD */
-.scoreboard{
+.shop{
     position:absolute;
-    top:50px;
-    right:50px;
-    width:290px;
-    padding:20px;
+    right:3%;
+    top:6%;
+    width:22%;
+    min-width:220px;
     border:8px solid #ddd;
-    background:rgba(255,255,255,0.15);
+    background:rgba(255,255,255,.15);
+    padding:15px
 }
 
-.score{
-    background:#ddd;
-    padding:25px 15px;
+.up{
+    padding:25px 10px;
     margin-bottom:12px;
-    font-size:24px;
-    font-weight:bold;
-    text-align:center;
-}
-
-/* ROAD */
-.road{
-    position:relative;
-    height:350px;
-    background:#7c7c7c;
-}
-
-.lane{
-    position:absolute;
-    top:50%;
-    left:0;
-    width:100%;
-    display:flex;
-    justify-content:space-around;
-    transform:translateY(-50%);
-}
-
-.dash{
-    width:170px;
-    height:28px;
     background:#ddd;
+    text-align:center;
+    font-weight:bold
 }
 
-/* GRASS */
-.grass{
-    position:relative;
-    height:170px;
-    background:#3f7138;
-}
-
-/* CLICK COUNTER */
-.counter{
+.line-wrap{
     position:absolute;
-    right:45px;
-    bottom:20px;
-    width:330px;
-    height:120px;
+    width:100%;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    justify-content:space-around
+}
+
+.line{
+    width:140px;
+    height:24px;
+    background:#ddd
+}
+
+.car{
+    position:absolute;
+    left:-120px;
+    bottom:35px;
+    font-size:60px;
+    cursor:pointer;
+    animation:drive 14s linear forwards
+}
+
+@keyframes drive{
+    from{left:-120px}
+    to{left:110%}
+}
+
+.float{
+    position:absolute;
+    color:white;
+    font-weight:bold;
+    pointer-events:none;
+    animation:floatUp 1s forwards
+}
+
+@keyframes floatUp{
+    from{
+        opacity:1;
+        transform:translateY(0)
+    }
+    to{
+        opacity:0;
+        transform:translateY(-80px)
+    }
+}
+
+.bonus{
+    position:absolute;
+    right:3%;
+    bottom:18px;
+    width:32%;
+    min-width:250px;
+    height:110px;
     border:8px solid #ddd;
-    background:rgba(255,255,255,0.3);
+    background:rgba(255,255,255,.3);
     display:flex;
     align-items:center;
     justify-content:flex-end;
-    gap:25px;
-    padding:20px;
+    gap:20px;
+    padding:15px
 }
 
-.counter-text{
+.btxt{
     background:#ddd;
     padding:10px 20px;
     font-weight:bold;
-    text-align:center;
+    text-align:center
 }
 
-.car-btn{
-    width:85px;
-    height:75px;
+.icon{
+    width:80px;
+    height:70px;
+    background:black;
     color:white;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:40px;
-    cursor:arrow;
+    font-size:40px
+}
+
+@media(max-width:900px){
+
+    .cookie-box{
+        width:50%
+    }
+
+    .shop{
+        width:35%
+    }
+
+    .bonus{
+        width:60%
+    }
+
+    .lamp{
+        right:20%;
+        transform:scale(.8)
+    }
+}
+
+@media(max-width:650px){
+
+    .cookie-box{
+        width:65%
+    }
+
+    .shop{
+        width:40%;
+        min-width:150px
+    }
+
+    .bonus{
+        width:90%;
+        right:50%;
+        transform:translateX(50%)
+    }
+
+    .lamp{
+        display:none
+    }
 }
