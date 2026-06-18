@@ -1,521 +1,257 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ========== BASE ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    overflow:hidden;
-    font-family:Arial,sans-serif;
+body {
+  overflow: hidden;
+  background: #05070d;
+  color: white;
 }
 
-.game{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
+/* ========== GAME WORLD ========== */
+#game {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.sky{
-    flex:1;
-    position:relative;
-    overflow:hidden;
-    background:#41c6dc;
-    transition:background 2s linear;
+/* ========== ROAD ========== */
+#world {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  perspective: 800px;
+  overflow: hidden;
 }
 
-.road{
-    height:30vh;
-    min-height:180px;
-    background:#707070;
-    position:relative;
-    overflow:hidden;
+#road {
+  position: absolute;
+  bottom: 0;
+  width: 40%;
+  height: 200%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    #1a1a1a,
+    #0d0d0d
+  );
+  border-left: 4px solid #2c2c2c;
+  border-right: 4px solid #2c2c2c;
 }
 
-.grass{
-    height:15vh;
-    min-height:120px;
-    background:#3d7738;
-    position:relative;
+/* Lane markings */
+#lane-markings {
+  position: absolute;
+  width: 100%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    to bottom,
+    white 0px,
+    white 40px,
+    transparent 40px,
+    transparent 80px
+  );
+  opacity: 0.3;
+  animation: roadMove 1s linear infinite;
 }
 
-.score{
-    position:absolute;
-    top:20px;
-    left:50%;
-    transform:translateX(-50%);
-    color:white;
-    font-size:clamp(24px,2vw,40px);
-    font-weight:bold;
-    text-shadow:2px 2px 4px rgba(0,0,0,.3);
+/* Light poles */
+#light-poles {
+  position: absolute;
+  width: 100%;
+  height: 200%;
 }
 
-.cookie-box{
-    position:absolute;
-    left:40px;
-    top:80px;
-    width:min(35vw,400px);
-    aspect-ratio:1;
-    border:8px solid #ddd;
-    background:rgba(255,255,255,.15);
-    display:flex;
-    justify-content:center;
-    align-items:center;
+/* simulated poles */
+#light-poles::before,
+#light-poles::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 80px;
+  background: #666;
+  box-shadow: 0 0 20px #ffcc66;
+  top: 10%;
 }
 
-.cookie{
-    border:none;
-    background:none;
-    font-size:clamp(100px,12vw,220px);
-    cursor:pointer;
-    transition:.08s;
+#light-poles::after {
+  left: 80%;
+  top: 30%;
 }
 
-.cookie:active{
-    transform:scale(.92);
+/* ========== COCKPIT ========== */
+#cockpit {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(to top, #0a0a0a, transparent);
 }
 
-.float{
-    position:absolute;
-    color:white;
-    font-weight:bold;
-    font-size:24px;
-    pointer-events:none;
-    animation:floatUp 1s forwards;
+/* Steering wheel */
+#steering-wheel {
+  position: absolute;
+  bottom: 30px;
+  left: 50px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 10px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s linear;
+  box-shadow: 0 0 20px rgba(0,255,255,0.1);
 }
 
-@keyframes floatUp{
-    from{
-        opacity:1;
-        transform:translateY(0);
-    }
-    to{
-        opacity:0;
-        transform:translateY(-80px);
-    }
+#wheel-inner {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #333, #111);
 }
 
-.house{
-    position:absolute;
-    bottom:0;
-    left:42%;
-    transform:translateX(-50%);
+/* ========== DASHBOARD ========== */
+#dashboard {
+  position: absolute;
+  bottom: 0;
+  left: 250px;
+  right: 250px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px;
 }
 
-.roof{
-    width:240px;
-    height:100px;
-    background:#7a4121;
-    clip-path:polygon(50% 0%,100% 100%,0% 100%);
+/* Speed box */
+#speed-box, #gear-box {
+  background: rgba(0,0,0,0.5);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #1f1f1f;
+  min-width: 120px;
 }
 
-.home{
-    width:190px;
-    height:150px;
-    background:#d8a567;
-    border:4px solid #9b6834;
-    margin:auto;
-    position:relative;
+.label {
+  font-size: 12px;
+  opacity: 0.7;
 }
 
-.window{
-    width:40px;
-    height:40px;
-    background:#b8ebff;
-    border:3px solid #555;
-    position:absolute;
-    top:25px;
+#speed-value {
+  font-size: 32px;
+  color: #00e5ff;
 }
 
-.window.left{
-    left:20px;
+#gear-value {
+  font-size: 28px;
+  color: #ffcc00;
 }
 
-.window.right{
-    right:20px;
+/* ========== RADIO ========== */
+#radio {
+  width: 300px;
+  height: 180px;
+  background: rgba(10,10,10,0.8);
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 0 25px rgba(0,255,255,0.05);
 }
 
-.door{
-    width:45px;
-    height:75px;
-    background:#7b4b24;
-    position:absolute;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
+#radio-header {
+  text-align: center;
+  color: #00e5ff;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
 }
 
-.lamp{
-    position:absolute;
-    right:25%;
-    bottom:0;
+#radio-screen {
+  height: 90px;
+  background: black;
+  border-radius: 8px;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid #222;
 }
 
-.pole{
-    width:16px;
-    height:320px;
-    background:#d8d8d8;
+#radio-text {
+  font-size: 14px;
+  color: #7efcff;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInText 0.6s forwards;
 }
 
-.arm{
-    position:absolute;
-    top:10px;
-    right:0;
-    width:70px;
-    height:10px;
-    background:#d8d8d8;
-    transform-origin:right center;
-    transform:rotate(18deg);
+/* Radio buttons */
+#radio-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 10px;
 }
 
-.head{
-    position:absolute;
-    top:-5px;
-    right:65px;
-    width:30px;
-    height:18px;
-    background:#ffe96d;
-    border-radius:4px;
+#radio-controls button {
+  background: #111;
+  border: 1px solid #333;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
-.glow{
-    position:absolute;
-    top:15px;
-    left:-160px;
-    width:260px;
-    height:420px;
-    background:rgba(255,255,130,.35);
-    clip-path:polygon(50% 0%,100% 100%,0% 100%);
-    opacity:.2;
-    transition:opacity 2s;
+#radio-controls button:hover {
+  background: #1a1a1a;
 }
 
-.shop{
-    position:absolute;
-    top:40px;
-    right:40px;
-    width:280px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+/* ========== AI PANEL ========== */
+#assistant-panel {
+  width: 250px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.upgrade{
-    padding:18px;
-    border:none;
-    background:#ddd;
-    font-weight:bold;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:16px;
+#confidence-bar {
+  width: 100%;
+  height: 8px;
+  background: #222;
+  margin-top: 5px;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-.upgrade:hover{
-    background:#eee;
+#confidence-fill {
+  width: 62%;
+  height: 100%;
+  background: linear-gradient(to right, #00e5ff, #4caf50);
 }
 
-.road-lines{
-    position:absolute;
-    width:100%;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    justify-content:space-around;
+/* ========== CONTROLS HELP ========== */
+#controls-help {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
 }
 
-.line{
-    width:160px;
-    height:20px;
-    background:white;
+/* ========== ANIMATIONS ========== */
+@keyframes roadMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(80px); }
 }
 
-#vehicleLayer,
-#truckLayer{
-    position:absolute;
-    inset:0;
-}
-
-.car{
-    position:absolute;
-    bottom:40px;
-    left:-150px;
-    width:120px;
-    height:60px;
-    animation:driveCar 18s linear forwards;
-}
-
-.car-body{
-    position:absolute;
-    bottom:12px;
-    width:110px;
-    height:28px;
-    background:#d83c3c;
-    border-radius:8px;
-}
-
-.car-top{
-    position:absolute;
-    left:40px;
-    bottom:32px;
-    width:45px;
-    height:20px;
-    background:#d83c3c;
-    border-radius:8px 8px 0 0;
-}
-
-.wheel{
-    width:20px;
-    height:20px;
-    background:black;
-    border-radius:50%;
-    position:absolute;
-    bottom:0;
-}
-
-.wheel.left{
-    left:15px;
-}
-
-.wheel.right{
-    right:15px;
-}
-
-.golden-car .car-body,
-.golden-car .car-top{
-    background:gold;
-    box-shadow:0 0 15px gold;
-}
-
-@keyframes driveCar{
-    from{
-        left:-150px;
-    }
-    to{
-        left:110%;
-    }
-}
-
-.truck{
-    position:absolute;
-    left:-400px;
-    bottom:95px;
-    width:340px;
-    height:90px;
-    animation:driveTruck 25s linear forwards;
-}
-
-.truck-cab{
-    position:absolute;
-    width:70px;
-    height:50px;
-    background:#3d67ff;
-    bottom:20px;
-}
-
-.truck-trailer{
-    position:absolute;
-    left:75px;
-    width:240px;
-    height:60px;
-    background:white;
-    bottom:15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:10px;
-    font-weight:bold;
-}
-
-.truck-wheel{
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    background:black;
-    position:absolute;
-    bottom:0;
-}
-
-.w1{
-    left:15px;
-}
-
-.w2{
-    left:120px;
-}
-
-.w3{
-    left:260px;
-}
-
-@keyframes driveTruck{
-    from{
-        left:-400px;
-    }
-    to{
-        left:120%;
-    }
-}
-
-.cloud{
-    position:absolute;
-    left:-200px;
-    width:140px;
-    height:50px;
-    background:white;
-    border-radius:50px;
-    animation:cloudMove linear forwards;
-}
-
-.cloud::before{
-    content:"";
-    position:absolute;
-    width:60px;
-    height:60px;
-    background:white;
-    border-radius:50%;
-    left:15px;
-    top:-25px;
-}
-
-.cloud::after{
-    content:"";
-    position:absolute;
-    width:70px;
-    height:70px;
-    background:white;
-    border-radius:50%;
-    right:15px;
-    top:-30px;
-}
-
-@keyframes cloudMove{
-    from{
-        left:-200px;
-    }
-    to{
-        left:120%;
-    }
-}
-
-.bird{
-    position:absolute;
-    left:-50px;
-    width:30px;
-    height:15px;
-    border-top:3px solid black;
-    border-radius:50%;
-    animation:
-        birdFly 40s linear forwards,
-        flap .4s infinite alternate;
-}
-
-@keyframes birdFly{
-    from{
-        left:-50px;
-    }
-    to{
-        left:110%;
-    }
-}
-
-@keyframes flap{
-    from{
-        transform:scaleY(1);
-    }
-    to{
-        transform:scaleY(.5);
-    }
-}
-
-.plane{
-    position:absolute;
-    left:-100px;
-    font-size:40px;
-    animation:planeFly 90s linear forwards;
-}
-
-@keyframes planeFly{
-    from{
-        left:-100px;
-    }
-    to{
-        left:120%;
-    }
-}
-
-.bonus-panel{
-    position:absolute;
-    right:30px;
-    bottom:20px;
-    width:320px;
-    height:100px;
-    border:6px solid #ddd;
-    background:rgba(255,255,255,.3);
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    gap:15px;
-    padding:15px;
-}
-
-.bonus-text{
-    background:#ddd;
-    padding:10px 18px;
-    text-align:center;
-    font-weight:bold;
-}
-
-.bonus-icon{
-    width:70px;
-    height:60px;
-    background:black;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-}
-
-@media(max-width:900px){
-
-    .cookie-box{
-        width:50vw;
-    }
-
-    .shop{
-        width:220px;
-    }
-
-    .lamp{
-        transform:scale(.8);
-        right:18%;
-    }
-}
-
-@media(max-width:650px){
-
-    .cookie-box{
-        width:65vw;
-    }
-
-    .shop{
-        width:180px;
-        right:10px;
-    }
-
-    .upgrade{
-        font-size:13px;
-    }
-
-    .lamp{
-        display:none;
-    }
-
-    .bonus-panel{
-        width:90%;
-        right:50%;
-        transform:translateX(50%);
-    }
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

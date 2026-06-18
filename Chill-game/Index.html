@@ -1,133 +1,97 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Road Clicker</title>
-
-    <link rel="stylesheet" href="Chill.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chill Drive</title>
+  <link rel="stylesheet" href="Chill.css">
 </head>
+
 <body>
 
-<div class="game">
+  <!-- GAME WRAPPER -->
+  <div id="game">
 
-    <div id="sky" class="sky">
+    <!-- ROAD SCENE -->
+    <div id="world">
+      <div id="road">
+        <div id="lane-markings"></div>
+        <div id="light-poles"></div>
+      </div>
+    </div>
 
-        <div id="sunMoon" class="sun"></div>
+    <!-- CAR HUD / COCKPIT -->
+    <div id="cockpit">
 
-        <div id="cloudLayer"></div>
+      <!-- STEERING WHEEL -->
+      <div id="steering-wheel">
+        <div id="wheel-inner"></div>
+      </div>
 
-        <div id="birdLayer"></div>
+      <!-- DASHBOARD -->
+      <div id="dashboard">
 
-        <div id="planeLayer"></div>
-
-        <div class="score">
-            Cookies:
-            <span id="cookieCount">0</span>
+        <!-- SPEED -->
+        <div id="speed-box">
+          <div class="label">Speed</div>
+          <div id="speed-value">0</div>
+          <div class="unit">km/h</div>
         </div>
 
-        <div class="cookie-box">
+        <!-- GEAR -->
+        <div id="gear-box">
+          <div class="label">Gear</div>
+          <div id="gear-value">N</div>
+        </div>
 
-            <div id="cookieArea">
+        <!-- RADIO / VIBE COMPANION -->
+        <div id="radio">
 
-                <button id="cookieBtn" class="cookie">
-                    🍪
-                </button>
+          <div id="radio-header">VIBE FM</div>
 
+          <div id="radio-screen">
+            <div id="radio-text" class="typing">
+              Welcome driver...
             </div>
+          </div>
+
+          <div id="radio-controls">
+            <button id="prev">⏮</button>
+            <button id="play">▶</button>
+            <button id="next">⏭</button>
+          </div>
 
         </div>
 
-        <div class="house">
+        <!-- ASSISTANT PANEL -->
+        <div id="assistant-panel">
+          <div id="xp">
+            Confidence XP: <span id="xp-value">151</span> / 1000
+          </div>
+          <div id="confidence-bar">
+            <div id="confidence-fill"></div>
+          </div>
 
-            <div class="roof"></div>
-
-            <div class="home">
-
-                <div class="window left"></div>
-
-                <div class="window right"></div>
-
-                <div class="door"></div>
-
-            </div>
-
+          <div id="ai-tip">
+            Keep your eyes on the road.
+          </div>
         </div>
 
-        <div class="lamp">
-
-            <div class="pole"></div>
-
-            <div class="arm"></div>
-
-            <div class="head"></div>
-
-            <div id="lampGlow" class="glow"></div>
-
-        </div>
-
-        <div class="shop">
-
-            <button class="upgrade" data-cost="50" data-power="1">
-                +1 Per Click
-                <span>50</span>
-            </button>
-
-            <button class="upgrade" data-cost="250" data-power="5">
-                +5 Per Click
-                <span>250</span>
-            </button>
-
-            <button class="upgrade" data-cost="1000" data-power="10">
-                +10 Per Click
-                <span>1000</span>
-            </button>
-
-            <button class="upgrade" data-cost="5000" data-power="25">
-                +25 Per Click
-                <span>5000</span>
-            </button>
-
-        </div>
+      </div>
 
     </div>
 
-    <div class="road">
-
-        <div class="road-lines">
-
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-
-        </div>
-
-        <div id="vehicleLayer"></div>
-
-        <div id="truckLayer"></div>
-
+    <!-- CONTROLS HELP -->
+    <div id="controls-help">
+      <h3>Controls</h3>
+      <p>W = Accelerate</p>
+      <p>S = Brake</p>
+      <p>A = Left</p>
+      <p>D = Right</p>
     </div>
 
-    <div class="grass">
+  </div>
 
-        <div class="bonus-panel">
-
-            <div id="bonusText" class="bonus-text">
-                Geen Bonus
-            </div>
-
-            <div class="bonus-icon">
-                ⭐
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script src="Chill.js"></script>
-
+  <script src="Chill.js"></script>
 </body>
 </html>
